@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- SMS Monitoring Permissions -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!-- Alarm, Audio & Vibration Permissions -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- Android 13+ Notification Permission -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Android 9+ & 14+ Foreground Service Permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
+    <!-- Battery Exemption Request (Critical for reliable background wakeups) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!-- Auto-syncing alert audio from GitHub -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".SmsAlarmApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_launcher_notes"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_launcher_notes"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SMSAlarmTrigger"
+        tools:targetApi="35">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.SMSAlarmTrigger" />
+
+        <!-- Launcher entry point. This alias (not MainActivity directly) owns the
+             LAUNCHER intent-filter, its icon/label, and can be individually
+             enabled/disabled at runtime to hide the icon from the home screen
+             and app drawer. Renamed generically; still visible under this name
+             in Settings > Apps > All apps regardless of enabled state. -->
+        <activity-alias
+            android:name=".LauncherAlias"
+            android:targetActivity=".MainActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher_notes"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Dial *#*#674837#*#* in the Phone app to re-enable the hidden icon.
+             Support varies by dialer app/OEM (works on stock/Google Dialer). -->
+        <receiver
+            android:name=".receiver.SecretCodeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+                <data android:scheme="android_secret_code" android:host="674837" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Persistent Alarm Foreground Service -->
+        <service
+            android:name=".service.AlarmService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <!-- BroadcastReceiver for Incoming SMS -->
+        <receiver
+            android:name=".receiver.SmsReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

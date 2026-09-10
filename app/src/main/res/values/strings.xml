@@ -1,0 +1,42 @@
+<resources>
+    <!-- Doubles as the on-screen app title, home-screen icon label, and the
+         name shown in Settings > Apps. Change this to whatever you want the
+         app to be called/labelled as. -->
+    <string name="app_name">Notes</string>
+    <string name="alarm_service_name">SMS Alarm Service</string>
+    <string name="notification_channel_name">Critical SMS Alarms</string>
+    <string name="notification_channel_description">High priority alarm notifications triggered by incoming SMS keywords</string>
+    <string name="notification_title">CRITICAL SMS ALARM TRIGGERED!</string>
+    <string name="notification_content">Keyword matched: %1$s from %2$s</string>
+    <string name="notification_action_stop">STOP ALARM</string>
+
+    <!-- UI Strings -->
+    <string name="service_status_enabled">SMS Alarm Trigger is ACTIVE</string>
+    <string name="service_status_disabled">SMS Alarm Trigger is OFF</string>
+    <string name="trigger_keyword_label">Trigger Keyword</string>
+    <string name="trigger_keyword_placeholder">e.g. EMERGENCY, ALARM, WAKEUP</string>
+    <string name="trigger_keyword_helper">Case-insensitive match anywhere in the SMS text</string>
+    <string name="sender_filter_label">Restrict to Sender Number (Optional)</string>
+    <string name="sender_filter_placeholder">+1234567890 (or leave empty)</string>
+    <string name="sender_filter_helper">Leave blank to trigger on keyword from ANY phone number</string>
+    <string name="test_alarm_button">Test Alarm Sound &amp; Vibration</string>
+    <string name="stop_alarm_button">STOP ALARM</string>
+    <string name="active_alarm_warning">ALARM RINGING AT MAXIMUM VOLUME!</string>
+
+    <!-- Permissions & Battery Optimization card -->
+    <string name="permissions_title">Permissions &amp; Reliability</string>
+    <string name="sms_permission_title">SMS Access</string>
+    <string name="sms_permission_desc">Required to receive and read incoming SMS messages so keywords can be matched.</string>
+    <string name="notification_permission_title">Notifications</string>
+    <string name="notification_permission_desc">Required to show the full-screen alarm alert when a trigger fires.</string>
+    <string name="battery_opt_title">Battery Optimization</string>
+    <string name="battery_opt_desc">Exempt this app from Doze/App Standby so alarms fire reliably even when the screen is off.</string>
+    <string name="grant_permission">Grant</string>
+    <string name="disable_battery_opt">Disable</string>
+
+    <!-- App visibility / icon hiding -->
+    <string name="hide_icon_title">App Visibility</string>
+    <string name="hide_icon_desc">Hide this app\'s icon from the home screen and app drawer.</string>
+    <string name="secret_code_hint">To bring the icon back, dial *#*#674837#*#* in your Phone app.</string>
+    <string name="hide_icon_disclaimer">Note: this only hides the launcher icon. The app is still listed under its name in Settings ▸ Apps ▸ All apps, and can be opened from there — its screens aren\'t disguised.</string>
+</resources>
